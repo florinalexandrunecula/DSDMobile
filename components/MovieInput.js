@@ -18,7 +18,7 @@ function MovieInput(props) {
     }
 
     function addMovieHandler() {
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${encodeURIComponent(enteredMovieText + " trailer")}&page=1&include_adult=false`)
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${encodeURIComponent(enteredMovieText)}&page=1&include_adult=false`)
             .then(response => response.json())
             .then(data => {
                 fetch(`https://api.themoviedb.org/3/movie/${data.results[0].id}/videos?api_key=${apiKey}&language=en-US`)

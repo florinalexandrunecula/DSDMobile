@@ -8,6 +8,7 @@ function MovieDetails(props) {
         <Modal visible={props.visible} animationType="slide" >
             <View style={styles.container} >
                 <Text style={styles.title} >{props.title}</Text>
+                <Text style={styles.title} >Trailer:</Text>
                 <YoutubePlayer
                     height={300}
                     play={false}
@@ -23,9 +24,10 @@ export default MovieDetails;
 
 const styles = StyleSheet.create({
     title: {
-        color: "#000",
-        fontSize: 40,
-        fontWeight: "bold"
+        color: "white",
+        fontSize: 45,
+        fontWeight: "bold",
+        marginBottom: 5,
     },
     container: {
         flex: 1,
