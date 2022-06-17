@@ -10,23 +10,27 @@ import {
 
 function MovieInput(props) {
     const [enteredMovieText, setEnteredMovieText] = useState('');
-    const [enteredMovieLink, setEnteredMovieLink] = useState('');
+
+    let apiKey = "17a97a1f978df593776c22745ce4c2a3";
 
     function movieInputHandler(enteredText) {
         setEnteredMovieText(enteredText);
     }
 
-    function movieLinkHandler(enteredLink) {
-        setEnteredMovieLink(enteredLink);
-    }
-
     function addMovieHandler() {
-        props.onAddMovie({
-            title: enteredMovieText, 
-            link: enteredMovieLink
-        });
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${encodeURIComponent(enteredMovieText + " trailer")}&page=1&include_adult=false`)
+            .then(response => response.json())
+            .then(data => {
+                fetch(`https://api.themoviedb.org/3/movie/${data.results[0].id}/videos?api_key=${apiKey}&language=en-US`)
+                    .then(response => response.json())
+                    .then(data => {
+                        props.onAddMovie({
+                            title: enteredMovieText,
+                            link: data.results[0].key,
+                        });
+                    });
+            });
         setEnteredMovieText('');
-        setEnteredMovieLink('');
     }
 
     return (
@@ -41,12 +45,6 @@ function MovieInput(props) {
                     placeholder="Add a new movie!"
                     onChangeText={movieInputHandler}
                     value={enteredMovieText}
-                />
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Youtube trailer link!"
-                    onChangeText={movieLinkHandler}
-                    value={enteredMovieLink}
                 />
                 <View style={styles.buttonContainer}>
                     <View style={styles.button}>

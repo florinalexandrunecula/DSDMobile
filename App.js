@@ -12,6 +12,7 @@ export default function App() {
   const [moviesList, setMoviesList] = useState([]);
   const [currentMovie, setCurrentMovie] = useState({
     title: "",
+    id: "",
     link: "",
   });
 
@@ -31,20 +32,22 @@ export default function App() {
     setShowModalIsVisible(false);
   }
 
-  function showMovieDetails(title, link) {
+  function showMovieDetails(title, id, link) {
     setCurrentMovie({
       title: title,
+      id: id,
       link: link,
     });
     startShowMovieHandler();
   }
 
   function addMovieHandler(enteredMovie) {
+    console.log(enteredMovie);
     setMoviesList((currentMoviesList) => [
       ...currentMoviesList,
       { title: enteredMovie.title,
         link: enteredMovie.link,
-        id: Math.random().toString() 
+        id: Math.random().toString(),
       },
     ]);
     endAddMovieHandler();
@@ -74,6 +77,7 @@ export default function App() {
           visible={showModalIsVisible}
           title={currentMovie.title}
           link={currentMovie.link}
+          id={currentMovie.id}
           exitDetails={endShowMovieHandler}
         />
         <View style={styles.moviesContainer}>
@@ -83,14 +87,14 @@ export default function App() {
               return (
                 <MovieItem
                   title={itemData.item.title}
-                  link={itemData.item.link}
                   id={itemData.item.id}
+                  link={itemData.item.link}
                   showItem={showMovieDetails}
                   onDeleteItem={deleteMovieHandler}
                 />
               );
             }}
-            keyExtractor={(item, index) => {
+            keyExtractor={(item) => {
               return item.id;
             }}
             alwaysBounceVertical={false}

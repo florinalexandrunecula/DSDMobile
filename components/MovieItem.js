@@ -8,14 +8,8 @@ function MovieItem(props) {
             exiting={LightSpeedOutLeft}
         >
             <View style={styles.movieItem}>
-                {/* <Pressable
-                onPress={props.onDeleteItem.bind(this, props.id)}
-                style={({ pressed }) => pressed && styles.pressedItem}
-            >
-                <Text style={styles.movieText}>{props.text}</Text>
-            </Pressable> */}
                 <Pressable
-                    onPress={props.showItem.bind(this, props.title, props.link)}
+                    onPress={props.showItem.bind(this, props.title, props.id, props.link)}
                     style={({ pressed }) => pressed && styles.pressedItem}
                 >
                     <Text style={styles.movieText} >{props.title}</Text>
